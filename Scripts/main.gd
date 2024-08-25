@@ -101,5 +101,5 @@ func check_win():
 	if tiles == solved and move_counter > 1:
 		print("You win in ", move_counter, " moves!!")
 		$FullImage.show()
-		# Here you can add further actions for the prize, 
+		# Here you can add further actions for the win, 
 		# e.g. display a win panel or show a restart button
