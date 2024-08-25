@@ -18,7 +18,7 @@ func start_game():
 	var grey_image = Image.load_from_file("res://Assets/img/greytile.png")
 	var grey_texture = ImageTexture.create_from_image(grey_image)
 	$FullImage.texture = texture
-	$FullImage.hide()  # Verstecke das volle Bild zu Beginn
+	$FullImage.hide()  # Hide the full picture at the beginning
 
 	for j in range(4):
 		for i in range(4):
@@ -43,7 +43,7 @@ func start_game():
 func shuffle_tiles():
 	offset = tile_size + 2
 	var t = 0
-	while t < 100:  # Erhöht für bessere Durchmischung
+	while t < 100:  # Increased for better mixing
 		var random_tile = tiles[randi() % 16]
 		if random_tile.tile_name != "Tile16" and random_tile.tile_name != previous:
 			var rows = int(random_tile.position.y / offset)
@@ -101,5 +101,5 @@ func check_win():
 	if tiles == solved and move_counter > 1:
 		print("You win in ", move_counter, " moves!!")
 		$FullImage.show()
-		# Hier können Sie weitere Aktionen für den Gewinn hinzufügen, 
-		# z.B. ein Gewinn-Panel anzeigen oder einen Neustart-Button einblenden
+		# Here you can add further actions for the prize, 
+		# e.g. display a win panel or show a restart button
