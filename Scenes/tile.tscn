@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://cm84jqnkwiome"]
+
+[ext_resource type="Script" path="res://Scripts/tile.gd" id="1_70m7s"]
+
+[node name="Tile" type="StaticBody2D"]
+script = ExtResource("1_70m7s")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
