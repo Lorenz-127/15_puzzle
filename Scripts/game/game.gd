@@ -7,11 +7,19 @@ var tile_size
 var offset
 var move_counter = 0
 var previous = ""
+signal move_made(moves)
+signal puzzle_solved
 
 func _ready():
 	start_game()
 
 func start_game():
+	# Clear existing tiles
+	for tile in tiles:
+		tile.queue_free()
+	tiles.clear()
+	solved.clear()
+
 	tile_size = get_viewport().get_visible_rect().size.x / 4
 	var image = Image.load_from_file("res://Assets/img/logo_godot.png")
 	var texture = ImageTexture.create_from_image(image)
@@ -39,11 +47,12 @@ func start_game():
 	solved = tiles.duplicate()
 	shuffle_tiles()
 	move_counter = 0
+	emit_signal("move_made", move_counter)
 
 func shuffle_tiles():
 	offset = tile_size + 2
 	var t = 0
-	while t < 3:  # Increased for better mixing
+	while t < 4:  # Increased for better mixing
 		var random_tile = tiles[randi() % 16]
 		if random_tile.tile_name != "Tile16" and random_tile.tile_name != previous:
 			var rows = int(random_tile.position.y / offset)
@@ -53,9 +62,9 @@ func shuffle_tiles():
 
 func _input(event):
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-		var mouse_pos = get_global_mouse_position()
-		var rows = int(mouse_pos.y / offset)
-		var cols = int(mouse_pos.x / offset)
+		var local_mouse_pos = get_local_mouse_position()
+		var rows = int(local_mouse_pos.y / offset)
+		var cols = int(local_mouse_pos.x / offset)
 		if check_neighbours(rows, cols):
 			check_win()
 
@@ -96,10 +105,16 @@ func swap_tiles(tile_src, tile_dst):
 	
 	move_counter += 1
 	previous = tiles[tile_dst].tile_name
+	emit_signal("move_made", move_counter)
 
 func check_win():
-	if tiles == solved and move_counter > 1:
-		print("You win in ", move_counter, " moves!!")
-		$FullImage.show()
+	for i in range(tiles.size()):
+		if tiles[i].tile_name != solved[i].tile_name:
+			return  # Puzzle not solved
+	
+	print("You win in ", move_counter, " moves!!")
+	$FullImage.show()
+	emit_signal("puzzle_solved")
+		
 		# Here you can add further actions for the win, 
 		# e.g. display a win panel or show a restart button

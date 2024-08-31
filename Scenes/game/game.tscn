@@ -6,6 +6,8 @@
 size = Vector2(1024, 1024)
 
 [node name="Game" type="Area2D"]
+position = Vector2(125, 125)
+scale = Vector2(0.75, 0.75)
 script = ExtResource("1_hbkqc")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -15,4 +17,4 @@ shape = SubResource("RectangleShape2D_b05e8")
 [node name="FullImage" type="Sprite2D" parent="."]
 z_index = 1
 y_sort_enabled = true
-position = Vector2(516, 516)
+position = Vector2(517, 517)

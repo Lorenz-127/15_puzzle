@@ -1,0 +1,120 @@
+[gd_scene load_steps=6 format=3 uid="uid://c511ccoqibuv"]
+
+[ext_resource type="Script" path="res://Scenes/Main_Menu/main_menu.gd" id="1_c8rd0"]
+[ext_resource type="Texture2D" uid="uid://dwksjgbhf0ft3" path="res://Assets/Art/slide-15_bg.png" id="1_nus3n"]
+[ext_resource type="PackedScene" uid="uid://0ckw8by4otb2" path="res://Scenes/options menu/options_menu.tscn" id="3_w37uf"]
+
+[sub_resource type="FontVariation" id="FontVariation_vy8sf"]
+
+[sub_resource type="SystemFont" id="SystemFont_snjjf"]
+font_names = PackedStringArray("Impact")
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_c8rd0")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.760784, 0.839216, 0.964706, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 100
+
+[node name="spacer" type="Control" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 4
+theme_override_constants/shadow_offset_y = 4
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = SubResource("FontVariation_vy8sf")
+theme_override_font_sizes/font_size = 64
+text = "SILDER PUZZLE"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 24
+alignment = 1
+
+[node name="Logo" type="TextureRect" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+texture = ExtResource("1_nus3n")
+expand_mode = 1
+
+[node name="play_btn" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(120, 32)
+layout_mode = 2
+theme_override_fonts/font = SubResource("SystemFont_snjjf")
+theme_override_font_sizes/font_size = 24
+text = "PLAY
+"
+
+[node name="options_btn" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(120, 32)
+layout_mode = 2
+theme_override_fonts/font = SubResource("SystemFont_snjjf")
+theme_override_font_sizes/font_size = 24
+text = "OPTIONS
+"
+
+[node name="profile_btn" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(120, 32)
+layout_mode = 2
+theme_override_fonts/font = SubResource("SystemFont_snjjf")
+theme_override_font_sizes/font_size = 24
+text = "PROFILE
+"
+
+[node name="tutorial_btn" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(120, 32)
+layout_mode = 2
+theme_override_fonts/font = SubResource("SystemFont_snjjf")
+theme_override_font_sizes/font_size = 24
+text = "TUTORIAL
+"
+
+[node name="exit_btn" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(120, 32)
+layout_mode = 2
+theme_override_fonts/font = SubResource("SystemFont_snjjf")
+theme_override_font_sizes/font_size = 24
+text = "EXIT
+"
+
+[node name="OptionsMenu" parent="." instance=ExtResource("3_w37uf")]
+visible = false
+layout_mode = 1

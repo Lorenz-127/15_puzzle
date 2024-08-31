@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://c511ccoqibuv"]
+[gd_scene load_steps=6 format=3 uid="uid://c511ccoqibuv"]
 
 [ext_resource type="Texture2D" uid="uid://ohwvbf6tb6h0" path="res://Assets/Art/icon.svg" id="1_5qy2p"]
 [ext_resource type="Script" path="res://Scenes/main menu/main_menu.gd" id="1_c8rd0"]
+[ext_resource type="PackedScene" uid="uid://0ckw8by4otb2" path="res://Scenes/options menu/options_menu.tscn" id="3_w37uf"]
 
 [sub_resource type="FontVariation" id="FontVariation_vy8sf"]
 
@@ -82,12 +83,12 @@ theme_override_font_sizes/font_size = 24
 text = "PLAY
 "
 
-[node name="option_btn" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+[node name="options_btn" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer"]
 custom_minimum_size = Vector2(120, 32)
 layout_mode = 2
 theme_override_fonts/font = SubResource("SystemFont_snjjf")
 theme_override_font_sizes/font_size = 24
-text = "OPTION
+text = "OPTIONS
 "
 
 [node name="profile_btn" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer"]
@@ -113,3 +114,7 @@ theme_override_fonts/font = SubResource("SystemFont_snjjf")
 theme_override_font_sizes/font_size = 24
 text = "EXIT
 "
+
+[node name="OptionsMenu" parent="." instance=ExtResource("3_w37uf")]
+visible = false
+layout_mode = 1

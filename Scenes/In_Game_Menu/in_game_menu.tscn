@@ -1,0 +1,89 @@
+[gd_scene load_steps=4 format=3 uid="uid://q6rydfkmibjq"]
+
+[ext_resource type="Script" path="res://Scenes/In_Game_Menu/in_game_menu.gd" id="1_a2ngh"]
+[ext_resource type="PackedScene" uid="uid://ce3dol4usu4yl" path="res://Scenes/game/game.tscn" id="1_j66xf"]
+
+[sub_resource type="SystemFont" id="SystemFont_ugkqd"]
+font_names = PackedStringArray("Impact")
+subpixel_positioning = 0
+
+[node name="InGameMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_a2ngh")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.760784, 0.839216, 0.964706, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 48
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 48
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 36
+
+[node name="Game" parent="MarginContainer/VBoxContainer" instance=ExtResource("1_j66xf")]
+position = Vector2(113, 77)
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 50
+
+[node name="Moves" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 4
+theme_override_constants/shadow_offset_y = 4
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = SubResource("SystemFont_ugkqd")
+theme_override_font_sizes/font_size = 32
+text = "Moves: 0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Time" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 4
+theme_override_constants/shadow_offset_y = 4
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = SubResource("SystemFont_ugkqd")
+theme_override_font_sizes/font_size = 32
+text = "Time: 0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+
+[node name="RestartGameBtn" type="Button" parent="MarginContainer/HBoxContainer2"]
+layout_mode = 2
+text = "Restart"
+
+[node name="MainMenuBtn" type="Button" parent="MarginContainer/HBoxContainer2"]
+layout_mode = 2
+text = "Main Menu"

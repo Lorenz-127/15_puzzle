@@ -1,0 +1,56 @@
+[gd_scene load_steps=4 format=3 uid="uid://0ckw8by4otb2"]
+
+[ext_resource type="Script" path="res://Scenes/options menu/options_menu.gd" id="1_1penr"]
+[ext_resource type="PackedScene" uid="uid://b7c48y57y7lgx" path="res://Scenes/options menu/settings_tab_container.tscn" id="2_xs1q0"]
+
+[sub_resource type="SystemFont" id="SystemFont_ikumu"]
+font_names = PackedStringArray("Impact")
+
+[node name="OptionsMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_1penr")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = -48
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 4
+theme_override_constants/shadow_offset_y = 4
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = SubResource("SystemFont_ikumu")
+theme_override_font_sizes/font_size = 32
+text = "OPTIONS"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SettingsTabContainer" parent="MarginContainer/VBoxContainer" instance=ExtResource("2_xs1q0")]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="back_to_main_btn" type="Button" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(120, 32)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+text = "BACK TO MAIN"
