@@ -2,7 +2,7 @@ extends Area2D
 
 var tiles = []
 var solved = []
-var tile_scene = preload("res://Scenes/tile.tscn")
+var tile_scene = preload("res://Scenes/game/tile.tscn")
 var tile_size
 var offset
 var move_counter = 0
@@ -43,7 +43,7 @@ func start_game():
 func shuffle_tiles():
 	offset = tile_size + 2
 	var t = 0
-	while t < 100:  # Increased for better mixing
+	while t < 3:  # Increased for better mixing
 		var random_tile = tiles[randi() % 16]
 		if random_tile.tile_name != "Tile16" and random_tile.tile_name != previous:
 			var rows = int(random_tile.position.y / offset)

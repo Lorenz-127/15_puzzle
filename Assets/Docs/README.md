@@ -1,6 +1,8 @@
 # Puzzle Game Project
 
-This is a simple puzzle game created with Godot 4.3. The game involves a sliding tile puzzle where players must rearrange tiles to complete an image.
+This is a simple puzzle game created with Godot 4.3.
+The game involves a sliding tile puzzle where players must rearrange tiles to complete an image.
+Inspiration for the puzzle was the classic [15-Puzzle-Game](https://en.wikipedia.org/wiki/15_puzzle)
 
 ## Project Structure
 
@@ -39,7 +41,7 @@ The project consists of the following main components:
 
 This project uses GDScript and is built with Godot's node-based architecture. The main game logic is handled in `main.gd`, while individual tile behavior is managed in `tile.gd`.
 
-To modify the puzzle image, replace `republic_order_1024x1024.png` in the Assets folder with your desired image (maintaining the 1024x1024 resolution for compatibility).
+To modify the puzzle image, replace `logo_godot.png` in the Assets folder with your desired image (maintaining the 1024x1024 resolution for compatibility).
 
 ## Future Improvements
 
