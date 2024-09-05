@@ -124,6 +124,7 @@ func shuffle_tiles():
 		if valid_moves.size() > 0:
 			var move_pos = valid_moves[randi() % valid_moves.size()]
 			swap_tiles(get_tile_index(move_pos), get_tile_index(empty_pos))
+	move_counter = 0
 
 func find_empty_tile() -> Vector2:
 	for i in range(tiles.size()):
@@ -153,19 +154,6 @@ func check_neighbours(row, col):
 				return true
 	
 	return false
-
-func find_empty(position, pos):
-	#var new_row = int(position.y / offset)
-	#var new_col = int(position.x / offset)
-	#if new_row < 0 or new_row >= grid_size or new_col < 0 or new_col >= grid_size:
-		#return false
-	#
-	#var new_pos = new_row * grid_size + new_col
-	#if tiles[new_pos].tile_name == "Tile%d" % (grid_size * grid_size) and tiles[new_pos].tile_name != previous:
-		#swap_tiles(pos, new_pos)
-		#return true
-	#return false
-	pass
 	
 func swap_tiles(tile_src, tile_dst):
 	var temp_pos = tiles[tile_src].position
