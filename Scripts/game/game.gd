@@ -1,114 +1,172 @@
 extends Area2D
 
+signal move_made(moves)
+signal puzzle_solved
+
+# Load textures
+var image_texture = load("res://Assets/img/logo_godot.png")
+var grey_texture = load("res://Assets/img/greytile.png")
+
 var tiles = []
 var solved = []
 var tile_scene = preload("res://Scenes/game/tile.tscn")
-var tile_size
-var offset
-var move_counter = 0
-var previous = ""
-signal move_made(moves)
-signal puzzle_solved
+var tile_size: int
+var grid_size: int = 4  # Default grid size
+var offset: int
+var move_counter: int = 0
+var previous: String = ""
 
 func _ready():
 	start_game()
 
-func start_game():
-	# Clear existing tiles
-	for tile in tiles:
-		tile.queue_free()
-	tiles.clear()
-	solved.clear()
+func start_game(new_grid_size: int = 4):
+	print("Starting game with grid size: ", new_grid_size)
+	grid_size = new_grid_size
+	clear_grid()
+	create_tiles()
+	shuffle_tiles()
 
-	# Calculate tile size
-	tile_size = get_viewport().get_visible_rect().size.x / 4
+func reset_game():
+	clear_grid()
+	move_counter = 0
+	emit_signal("move_made", move_counter)
+	create_tiles()
+	shuffle_tiles()
 
-	# Load textures
-	var image = load("res://Assets/img/logo_godot.png")
-	if not image:
-		push_error("Failed to load logo image")
+func create_tiles():
+	print("Creating tiles for grid size: ", grid_size)
+	var viewport_size = get_viewport().get_visible_rect().size
+	tile_size = min(viewport_size.x, viewport_size.y) / (grid_size + 1)
+	
+	# Center the puzzle
+	var start_x = (viewport_size.x - (tile_size * grid_size)) / 2
+	var start_y = (viewport_size.y - (tile_size * grid_size)) / 2
+
+	if not image_texture or not grey_texture:
+		push_error("Failed to load textures")
 		return
 
-	var grey_texture = load("res://Assets/img/greytile.png")
-	if not grey_texture:
-		push_error("Failed to load grey tile texture")
-		return
-
-	# Ensure image is of type Image
-	if image is Texture2D:
-		image = image.get_image()
+	var image = image_texture.get_image()
 	if not image:
 		push_error("Failed to get image data from logo texture")
 		return
 
-	# Set full image texture
-	$FullImage.texture = ImageTexture.create_from_image(image)
-	$FullImage.hide()  # Hide the full picture at the beginning
-
+	$FullImage.texture = image_texture
+	$FullImage.hide()
+	
+	# Scale grey texture to match tile size
+	var scaled_grey_image = grey_texture.get_image()
+	scaled_grey_image.resize(tile_size, tile_size)
+	var scaled_grey_texture = ImageTexture.create_from_image(scaled_grey_image)
+	
 	# Create tiles
-	for j in range(4):
-		for i in range(4):
-			var region = Rect2i(i * tile_size, j * tile_size, tile_size, tile_size)
+	for j in range(grid_size):
+		for i in range(grid_size):
+			var region = Rect2i(i * (image.get_width() / grid_size), j * (image.get_height() / grid_size), 
+								image.get_width() / grid_size, image.get_height() / grid_size)
 			var new_image = image.get_region(region)
 			var new_texture = ImageTexture.create_from_image(new_image)
 			var new_tile = tile_scene.instantiate()
-			new_tile.position = Vector2(tile_size * i + tile_size/2 + i*2, tile_size * j + tile_size/2 + j*2)
-			new_tile.tile_name = "Tile%d" % (j * 4 + i + 1)
-			new_tile.tile_texture = grey_texture if new_tile.tile_name == "Tile16" else new_texture
-			new_tile.real_texture = new_texture if new_tile.tile_name == "Tile16" else null
+			new_tile.position = Vector2(start_x + tile_size * i + tile_size/2, start_y + tile_size * j + tile_size/2)
+			new_tile.tile_name = "Tile%d" % (j * grid_size + i + 1)
+			new_tile.tile_texture = scaled_grey_texture if new_tile.tile_name == "Tile%d" % (grid_size * grid_size) else new_texture
+			new_tile.real_texture = new_texture if new_tile.tile_name == "Tile%d" % (grid_size * grid_size) else null
+			
+			new_tile.set_tile_size(tile_size)
+			
 			add_child(new_tile)
 			tiles.append(new_tile)
+	
+	# Add visual grid lines
+	var grid_lines = Node2D.new()
+	grid_lines.name = "GridLines"
+	add_child(grid_lines)
 
-	solved = tiles.duplicate()
-	shuffle_tiles()
-	move_counter = 0
-	emit_signal("move_made", move_counter)
+	for i in range(grid_size + 1):
+		var h_line = Line2D.new()
+		h_line.add_point(Vector2(start_x, start_y + i * tile_size))
+		h_line.add_point(Vector2(start_x + grid_size * tile_size, start_y + i * tile_size))
+		h_line.width = 2
+		h_line.default_color = Color.BLACK
+		grid_lines.add_child(h_line)
+
+		var v_line = Line2D.new()
+		v_line.add_point(Vector2(start_x + i * tile_size, start_y))
+		v_line.add_point(Vector2(start_x + i * tile_size, start_y + grid_size * tile_size))
+		v_line.width = 2
+		v_line.default_color = Color.BLACK
+		grid_lines.add_child(v_line)
+		solved = tiles.duplicate()
+	print("Tiles created. Total tiles: ", tiles.size())
+	
+func clear_grid():
+	print("Clearing grid. Tiles count before: ", tiles.size())
+	for tile in tiles:
+		tile.queue_free()
+	tiles.clear()
+	solved.clear()
+	
+	# Remove existing grid lines
+	var existing_grid_lines = get_node_or_null("GridLines")
+	if existing_grid_lines:
+		existing_grid_lines.queue_free()
+	print("Grid cleared. Tiles count after: ", tiles.size())
 
 func shuffle_tiles():
-	offset = tile_size + 2
-	var t = 0
-	while t < 4:  # Increased for better mixing
-		var random_tile = tiles[randi() % 16]
-		if random_tile.tile_name != "Tile16" and random_tile.tile_name != previous:
-			var rows = int(random_tile.position.y / offset)
-			var cols = int(random_tile.position.x / offset)
-			if check_neighbours(rows, cols):
-				t += 1
+	var shuffle_count = grid_size * grid_size * 3
+	for i in range(shuffle_count):
+		var empty_pos = find_empty_tile()
+		var valid_moves = []
+		for dir in [Vector2.UP, Vector2.DOWN, Vector2.LEFT, Vector2.RIGHT]:
+			var new_pos = empty_pos + dir
+			if is_valid_position(new_pos):
+				valid_moves.append(new_pos)
+		if valid_moves.size() > 0:
+			var move_pos = valid_moves[randi() % valid_moves.size()]
+			swap_tiles(get_tile_index(move_pos), get_tile_index(empty_pos))
 
-func _input(event):
-	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-		var local_mouse_pos = get_local_mouse_position()
-		var rows = int(local_mouse_pos.y / offset)
-		var cols = int(local_mouse_pos.x / offset)
-		if check_neighbours(rows, cols):
-			check_win()
+func find_empty_tile() -> Vector2:
+	for i in range(tiles.size()):
+		if tiles[i].tile_name == "Tile%d" % (grid_size * grid_size):
+			return Vector2(i % grid_size, i / grid_size)
+	return Vector2.ZERO  # Should never happen
 
-func check_neighbours(rows, cols):
-	if rows < 0 or rows > 3 or cols < 0 or cols > 3:
+func is_valid_position(pos: Vector2) -> bool:
+	return pos.x >= 0 and pos.x < grid_size and pos.y >= 0 and pos.y < grid_size
+
+func get_tile_index(pos: Vector2) -> int:
+	return int(pos.y) * grid_size + int(pos.x)
+
+func check_neighbours(row, col):
+	if row < 0 or row >= grid_size or col < 0 or col >= grid_size:
 		return false
 	
-	var pos = rows * 4 + cols
+	var pos = row * grid_size + col
 	var directions = [Vector2.UP, Vector2.DOWN, Vector2.LEFT, Vector2.RIGHT]
 	
 	for dir in directions:
-		var new_pos = tiles[pos].position + dir * offset
-		if find_empty(new_pos, pos):
-			return true
+		var new_pos = Vector2(col, row) + dir
+		if is_valid_position(new_pos):
+			var new_index = get_tile_index(new_pos)
+			if tiles[new_index].tile_name == "Tile%d" % (grid_size * grid_size):
+				swap_tiles(pos, new_index)
+				return true
 	
 	return false
 
 func find_empty(position, pos):
-	var new_rows = int(position.y / offset)
-	var new_cols = int(position.x / offset)
-	if new_rows < 0 or new_rows > 3 or new_cols < 0 or new_cols > 3:
-		return false
+	#var new_row = int(position.y / offset)
+	#var new_col = int(position.x / offset)
+	#if new_row < 0 or new_row >= grid_size or new_col < 0 or new_col >= grid_size:
+		#return false
+	#
+	#var new_pos = new_row * grid_size + new_col
+	#if tiles[new_pos].tile_name == "Tile%d" % (grid_size * grid_size) and tiles[new_pos].tile_name != previous:
+		#swap_tiles(pos, new_pos)
+		#return true
+	#return false
+	pass
 	
-	var new_pos = new_rows * 4 + new_cols
-	if tiles[new_pos].tile_name == "Tile16" and tiles[new_pos].tile_name != previous:
-		swap_tiles(pos, new_pos)
-		return true
-	return false
-
 func swap_tiles(tile_src, tile_dst):
 	var temp_pos = tiles[tile_src].position
 	tiles[tile_src].position = tiles[tile_dst].position
@@ -124,12 +182,21 @@ func swap_tiles(tile_src, tile_dst):
 
 func check_win():
 	for i in range(tiles.size()):
-		if tiles[i].tile_name != solved[i].tile_name:
+		if tiles[i].position != solved[i].position:
 			return  # Puzzle not solved
 	
 	print("You win in ", move_counter, " moves!!")
 	$FullImage.show()
 	emit_signal("puzzle_solved")
-		
-		# Here you can add further actions for the win, 
-		# e.g. display a win panel or show a restart button
+
+func _input(event):
+	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+		var viewport_size = get_viewport().get_visible_rect().size
+		var start_x = (viewport_size.x - (tile_size * grid_size)) / 2
+		var start_y = (viewport_size.y - (tile_size * grid_size)) / 2
+		var local_mouse_pos = get_local_mouse_position() - Vector2(start_x, start_y)
+		var row = int(local_mouse_pos.y / tile_size)
+		var col = int(local_mouse_pos.x / tile_size)
+		if row >= 0 and row < grid_size and col >= 0 and col < grid_size:
+			if check_neighbours(row, col):
+				check_win()

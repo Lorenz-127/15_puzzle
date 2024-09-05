@@ -58,6 +58,7 @@ func on_SettingsButton_pressed():
 		settings_instance = settings_scene.instantiate()
 		add_child(settings_instance)
 		settings_instance.settings_closed.connect(on_settings_closed)
+		settings_instance.puzzle_size_changed.connect(on_puzzle_size_changed)
 
 func on_settings_closed():
 	settings_instance = null
@@ -68,6 +69,10 @@ func on_SettingsScreen_hide_settings():
 	animation_player.play_backwards("show_settings")
 	if not was_paused_before_settings:
 		unpause_game()
+
+func on_puzzle_size_changed(new_size):
+	game.start_game(new_size)
+	reset_ui()
 
 func on_move_made(moves):
 	moves_label.text = "Moves: " + str(moves)
