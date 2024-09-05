@@ -20,14 +20,32 @@ func start_game():
 	tiles.clear()
 	solved.clear()
 
+	# Calculate tile size
 	tile_size = get_viewport().get_visible_rect().size.x / 4
-	var image = Image.load_from_file("res://Assets/img/logo_godot.png")
-	var texture = ImageTexture.create_from_image(image)
-	var grey_image = Image.load_from_file("res://Assets/img/greytile.png")
-	var grey_texture = ImageTexture.create_from_image(grey_image)
-	$FullImage.texture = texture
+
+	# Load textures
+	var image = load("res://Assets/img/logo_godot.png")
+	if not image:
+		push_error("Failed to load logo image")
+		return
+
+	var grey_texture = load("res://Assets/img/greytile.png")
+	if not grey_texture:
+		push_error("Failed to load grey tile texture")
+		return
+
+	# Ensure image is of type Image
+	if image is Texture2D:
+		image = image.get_image()
+	if not image:
+		push_error("Failed to get image data from logo texture")
+		return
+
+	# Set full image texture
+	$FullImage.texture = ImageTexture.create_from_image(image)
 	$FullImage.hide()  # Hide the full picture at the beginning
 
+	# Create tiles
 	for j in range(4):
 		for i in range(4):
 			var region = Rect2i(i * tile_size, j * tile_size, tile_size, tile_size)
@@ -35,12 +53,9 @@ func start_game():
 			var new_texture = ImageTexture.create_from_image(new_image)
 			var new_tile = tile_scene.instantiate()
 			new_tile.position = Vector2(tile_size * i + tile_size/2 + i*2, tile_size * j + tile_size/2 + j*2)
-			new_tile.tile_name = "Tile" + str(j * 4 + i + 1)
-			if new_tile.tile_name == "Tile16":
-				new_tile.tile_texture = grey_texture
-				new_tile.real_texture = new_texture
-			else:
-				new_tile.tile_texture = new_texture
+			new_tile.tile_name = "Tile%d" % (j * 4 + i + 1)
+			new_tile.tile_texture = grey_texture if new_tile.tile_name == "Tile16" else new_texture
+			new_tile.real_texture = new_texture if new_tile.tile_name == "Tile16" else null
 			add_child(new_tile)
 			tiles.append(new_tile)
 

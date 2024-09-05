@@ -1,11 +1,41 @@
-[gd_scene load_steps=4 format=3 uid="uid://q6rydfkmibjq"]
+[gd_scene load_steps=9 format=3 uid="uid://q6rydfkmibjq"]
 
 [ext_resource type="Script" path="res://Scenes/In_Game_Menu/in_game_menu.gd" id="1_a2ngh"]
 [ext_resource type="PackedScene" uid="uid://ce3dol4usu4yl" path="res://Scenes/game/game.tscn" id="1_j66xf"]
+[ext_resource type="PackedScene" uid="uid://cxeeymv3mrli" path="res://Scenes/In_Game_Settings/in_game_settings.tscn" id="3_pbdyh"]
 
 [sub_resource type="SystemFont" id="SystemFont_ugkqd"]
 font_names = PackedStringArray("Impact")
 subpixel_positioning = 0
+
+[sub_resource type="Animation" id="Animation_3pghc"]
+length = 0.001
+
+[sub_resource type="Animation" id="Animation_n3ai2"]
+resource_name = "puzzle_settings"
+
+[sub_resource type="Animation" id="Animation_bppbb"]
+resource_name = "show_settings"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("InGameSettings:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 1050), Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_0foyc"]
+_data = {
+"RESET": SubResource("Animation_3pghc"),
+"puzzle_settings": SubResource("Animation_n3ai2"),
+"show_settings": SubResource("Animation_bppbb")
+}
 
 [node name="InGameMenu" type="Control"]
 layout_mode = 3
@@ -80,6 +110,10 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 8
 
+[node name="PauseGameBtn" type="Button" parent="MarginContainer/HBoxContainer2"]
+layout_mode = 2
+text = "Pause"
+
 [node name="RestartGameBtn" type="Button" parent="MarginContainer/HBoxContainer2"]
 layout_mode = 2
 text = "Restart"
@@ -87,3 +121,17 @@ text = "Restart"
 [node name="MainMenuBtn" type="Button" parent="MarginContainer/HBoxContainer2"]
 layout_mode = 2
 text = "Main Menu"
+
+[node name="PuzzleSettingsBtn" type="Button" parent="MarginContainer/HBoxContainer2"]
+layout_mode = 2
+text = "Puzzle Settings"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_0foyc")
+}
+
+[node name="InGameSettings" parent="." instance=ExtResource("3_pbdyh")]
+layout_mode = 1
+offset_top = 1050.0
+offset_bottom = 1050.0

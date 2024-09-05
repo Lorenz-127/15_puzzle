@@ -1,0 +1,177 @@
+[gd_scene load_steps=8 format=3 uid="uid://cxeeymv3mrli"]
+
+[ext_resource type="FontFile" uid="uid://cee41gbx4l7p7" path="res://Assets/fonts/roboto_r_16.tres" id="1_04k6i"]
+[ext_resource type="Script" path="res://Scenes/In_Game_Settings/in_game_settings.gd" id="1_72aoq"]
+
+[sub_resource type="FontVariation" id="FontVariation_yewfp"]
+
+[sub_resource type="FontFile" id="FontFile_8im7c"]
+subpixel_positioning = 0
+msdf_pixel_range = 14
+msdf_size = 128
+cache/0/16/0/ascent = 0.0
+cache/0/16/0/descent = 0.0
+cache/0/16/0/underline_position = 0.0
+cache/0/16/0/underline_thickness = 0.0
+cache/0/16/0/scale = 1.0
+cache/0/32/0/ascent = 0.0
+cache/0/32/0/descent = 0.0
+cache/0/32/0/underline_position = 0.0
+cache/0/32/0/underline_thickness = 0.0
+cache/0/32/0/scale = 1.0
+
+[sub_resource type="Theme" id="Theme_ooq4r"]
+
+[sub_resource type="SystemFont" id="SystemFont_btr5c"]
+subpixel_positioning = 0
+
+[sub_resource type="Theme" id="Theme_5fykn"]
+default_font = SubResource("SystemFont_btr5c")
+default_font_size = 16
+
+[node name="InGameSettings" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_72aoq")
+
+[node name="SettingsContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 250
+theme_override_constants/margin_top = 250
+theme_override_constants/margin_right = 250
+theme_override_constants/margin_bottom = 250
+
+[node name="ColorRect" type="ColorRect" parent="SettingsContainer"]
+layout_mode = 2
+color = Color(0.619608, 0.619608, 0.619608, 0.564706)
+
+[node name="MarginContainer" type="MarginContainer" parent="SettingsContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 24
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SettingsContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 40
+
+[node name="TitleLabel" type="Label" parent="SettingsContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 4
+theme_override_constants/shadow_offset_y = 4
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = SubResource("FontVariation_yewfp")
+theme_override_font_sizes/font_size = 64
+text = "Settings"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CheckButton" type="CheckButton" parent="SettingsContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_colors/font_disabled_color = Color(0.18359, 0.18359, 0.18359, 1)
+theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_colors/icon_normal_color = Color(0, 0, 0, 1)
+theme_override_colors/icon_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/icon_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/icon_hover_color = Color(0, 0, 0, 1)
+theme_override_colors/icon_hover_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/icon_disabled_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
+theme_override_fonts/font = ExtResource("1_04k6i")
+theme_override_font_sizes/font_size = 16
+theme_override_constants/check_v_offset = 0
+button_pressed = true
+action_mode = 0
+shortcut_feedback = false
+shortcut_in_tooltip = false
+text = "Show Tile Numbers"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="SettingsContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/separation = 40
+
+[node name="MarginContainer" type="MarginContainer" parent="SettingsContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 6
+theme_override_constants/margin_right = 6
+
+[node name="HBoxContainer" type="HBoxContainer" parent="SettingsContainer/MarginContainer/VBoxContainer/HBoxContainer/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="SizeLabel" type="Label" parent="SettingsContainer/MarginContainer/VBoxContainer/HBoxContainer/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(140, 0)
+layout_mode = 2
+tooltip_text = "Adjust Puzzle Size min. 3x3 max. 8x8"
+mouse_filter = 1
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 2
+theme_override_fonts/font = SubResource("FontFile_8im7c")
+theme_override_font_sizes/font_size = 16
+text = "Puzzle Size"
+
+[node name="VSeparator2" type="VSeparator" parent="SettingsContainer/MarginContainer/VBoxContainer/HBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = SubResource("Theme_ooq4r")
+theme_override_constants/separation = 40
+
+[node name="SizeSlider" type="HSlider" parent="SettingsContainer/MarginContainer/VBoxContainer/HBoxContainer/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(200, 32)
+layout_mode = 2
+size_flags_vertical = 1
+theme = SubResource("Theme_5fykn")
+min_value = 3.0
+max_value = 8.0
+value = 4.0
+rounded = true
+tick_count = 6
+ticks_on_borders = true
+
+[node name="VSeparator" type="VSeparator" parent="SettingsContainer/MarginContainer/VBoxContainer/HBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 40
+
+[node name="SizeValue" type="Label" parent="SettingsContainer/MarginContainer/VBoxContainer/HBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+text = "4"
+horizontal_alignment = 2
+
+[node name="ChangeImageBtn" type="Button" parent="SettingsContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Change Puzzle Image"
+
+[node name="BackBtn" type="Button" parent="SettingsContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Back to Game"
+
+[connection signal="pressed" from="SettingsContainer/MarginContainer/VBoxContainer/BackBtn" to="." method="_on_back_btn_pressed"]
