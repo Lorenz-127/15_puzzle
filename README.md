@@ -18,9 +18,14 @@ The project consists of the following main components:
 
 ## Game Features
 
-- 4x4 grid puzzle
-- Randomized tile shuffling at game start
-- Move counter to track player progress
+- Dynamic grid system supporting various puzzle sizes (3x3 to 8x8)
+- Main menu with options for play, settings, profile, and tutorial
+- In-game menu with move counter, timer, and control buttons
+- Settings menu for adjusting puzzle size and other options
+- Pause/Resume functionality
+- Restart option
+- Return to main menu option
+- Move counter and timer to track player progress
 - Win condition check
 - Full image display upon puzzle completion
 
@@ -33,9 +38,11 @@ The project consists of the following main components:
 
 ## How to Play
 
+- From the main menu, select "PLAY" to start a new game.
 - Click on tiles adjacent to the empty space to move them.
 - Rearrange the tiles to recreate the original image.
-- The game will inform you when you've won and display the number of moves taken.
+- Use the in-game menu to pause, restart, or adjust settings.
+- The game will inform you when you've won and display the number of moves and time taken.
 
 ## Development
 
@@ -45,9 +52,21 @@ To modify the puzzle image, replace `logo_godot.png` in the Assets folder with y
 
 ## Future Improvements
 
-- Add difficulty levels (e.g., 3x3, 5x5 grids)
-- Implement a timer for speedrun challenges
-- Create a menu system for game options and level selection
+- Implement Challenge Mode with time and move limits
+- Develop Expert Mode with complex, pre-designed patterns
+- Create a custom game creator with more adjustable parameters
+- Add options for custom puzzle images
+- Implement accessibility features
+- Optimize for mobile platforms
 - Add sound effects and background music
 
-Feel free to contribute to the project or use it as a base for your own puzzle game implementations!
+## Contributing
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## License
+
+- [MIT License](https://github.com/Lorenz-127/15_puzzle?tab=MIT-1-ov-file)
+
+## Acknowledgements
+
+- [Godot Engine](https://godotengine.org/)
