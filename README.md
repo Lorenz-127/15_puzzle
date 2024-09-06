@@ -1,20 +1,11 @@
 # Puzzle Game Project
 
 This is a simple puzzle game created with Godot 4.3.
+<br>
+<img alt="gdscript" src="https://img.shields.io/badge/-GODOT-478CBF?style=flat-square&logo=godotengine&logoColor=white" />
+
 The game involves a sliding tile puzzle where players must rearrange tiles to complete an image.
 Inspiration for the puzzle was the classic [15-Puzzle-Game](https://en.wikipedia.org/wiki/15_puzzle)
-
-## Project Structure
-
-The project consists of the following main components:
-
-- `main.gd`: The main game logic script
-- `tile.gd`: Script for individual tile behavior
-- `main.tscn`: Main scene file
-- `tile.tscn`: Tile scene file
-- Assets:
-  - `logo_godot.png`: The main puzzle image
-  - `greytile.png`: Image for the empty tile
 
 ## Game Features
 
@@ -46,9 +37,7 @@ The project consists of the following main components:
 
 ## Development
 
-This project uses GDScript and is built with Godot's node-based architecture. The main game logic is handled in `main.gd`, while individual tile behavior is managed in `tile.gd`.
 
-To modify the puzzle image, replace `logo_godot.png` in the Assets folder with your desired image (maintaining the 1024x1024 resolution for compatibility).
 
 ## Future Improvements
 

@@ -5,6 +5,7 @@
 
 [sub_resource type="SystemFont" id="SystemFont_ikumu"]
 font_names = PackedStringArray("Impact")
+subpixel_positioning = 0
 
 [node name="OptionsMenu" type="Control"]
 layout_mode = 3
