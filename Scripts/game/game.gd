@@ -20,7 +20,6 @@ func _ready():
 	start_game()
 
 func start_game(new_grid_size: int = 4):
-	print("Starting game with grid size: ", new_grid_size)
 	grid_size = new_grid_size
 	clear_grid()
 	create_tiles()
@@ -34,9 +33,9 @@ func reset_game():
 	shuffle_tiles()
 
 func create_tiles():
-	print("Creating tiles for grid size: ", grid_size)
+	clear_grid()
 	var viewport_size = get_viewport().get_visible_rect().size
-	tile_size = min(viewport_size.x, viewport_size.y) / (grid_size + 1)
+	tile_size = min(viewport_size.x, viewport_size.y) / grid_size  # Verwende grid_size, nicht grid_size + 1
 	
 	# Center the puzzle
 	var start_x = (viewport_size.x - (tile_size * grid_size)) / 2
@@ -83,6 +82,7 @@ func create_tiles():
 	add_child(grid_lines)
 
 	for i in range(grid_size + 1):
+		# Horizontale Linie
 		var h_line = Line2D.new()
 		h_line.add_point(Vector2(start_x, start_y + i * tile_size))
 		h_line.add_point(Vector2(start_x + grid_size * tile_size, start_y + i * tile_size))
@@ -90,27 +90,27 @@ func create_tiles():
 		h_line.default_color = Color.BLACK
 		grid_lines.add_child(h_line)
 
+		# Vertikale Linie
 		var v_line = Line2D.new()
 		v_line.add_point(Vector2(start_x + i * tile_size, start_y))
 		v_line.add_point(Vector2(start_x + i * tile_size, start_y + grid_size * tile_size))
 		v_line.width = 2
 		v_line.default_color = Color.BLACK
 		grid_lines.add_child(v_line)
-		solved = tiles.duplicate()
-	print("Tiles created. Total tiles: ", tiles.size())
 	
+	solved = tiles.duplicate()
+
 func clear_grid():
-	print("Clearing grid. Tiles count before: ", tiles.size())
+	# Free all existing tiles
 	for tile in tiles:
 		tile.queue_free()
 	tiles.clear()
 	solved.clear()
-	
+
 	# Remove existing grid lines
 	var existing_grid_lines = get_node_or_null("GridLines")
 	if existing_grid_lines:
 		existing_grid_lines.queue_free()
-	print("Grid cleared. Tiles count after: ", tiles.size())
 
 func shuffle_tiles():
 	var shuffle_count = grid_size * grid_size * 3

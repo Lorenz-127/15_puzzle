@@ -7,6 +7,7 @@ signal puzzle_size_changed(new_size)
 @onready var size_slider = $SettingsContainer/MarginContainer/VBoxContainer/HBoxContainer/MarginContainer/HBoxContainer/SizeSlider
 @onready var size_value = $SettingsContainer/MarginContainer/VBoxContainer/HBoxContainer/MarginContainer/HBoxContainer/SizeValue
 
+
 func _ready():
 	connect_signals()
 	initialize_size_slider()
