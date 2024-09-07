@@ -3,8 +3,7 @@ extends Area2D
 signal move_made(moves)
 signal puzzle_solved
 
-# Load textures
-var image_texture = load("res://Assets/img/logo_godot.png")
+var image_texture: Texture2D
 var grey_texture = load("res://Assets/img/greytile.png")
 
 var tiles = []
@@ -17,7 +16,13 @@ var move_counter: int = 0
 var previous: String = ""
 
 func _ready():
+	ImageManager.connect("image_changed", _on_image_changed)
+	image_texture = ImageManager.current_texture
 	start_game()
+
+func _on_image_changed(new_texture: Texture2D):
+	image_texture = new_texture
+	reset_game()
 
 func start_game(new_grid_size: int = 4):
 	grid_size = new_grid_size
@@ -35,8 +40,8 @@ func reset_game():
 func create_tiles():
 	clear_grid()
 	var viewport_size = get_viewport().get_visible_rect().size
-	tile_size = min(viewport_size.x, viewport_size.y) / grid_size  # Verwende grid_size, nicht grid_size + 1
-	
+	tile_size = min(viewport_size.x, viewport_size.y) / grid_size
+
 	# Center the puzzle
 	var start_x = (viewport_size.x - (tile_size * grid_size)) / 2
 	var start_y = (viewport_size.y - (tile_size * grid_size)) / 2
@@ -47,7 +52,7 @@ func create_tiles():
 
 	var image = image_texture.get_image()
 	if not image:
-		push_error("Failed to get image data from logo texture")
+		push_error("Failed to get image data from texture")
 		return
 
 	$FullImage.texture = image_texture
@@ -82,7 +87,7 @@ func create_tiles():
 	add_child(grid_lines)
 
 	for i in range(grid_size + 1):
-		# Horizontale Linie
+		# Horizontal line
 		var h_line = Line2D.new()
 		h_line.add_point(Vector2(start_x, start_y + i * tile_size))
 		h_line.add_point(Vector2(start_x + grid_size * tile_size, start_y + i * tile_size))
@@ -90,7 +95,7 @@ func create_tiles():
 		h_line.default_color = Color.BLACK
 		grid_lines.add_child(h_line)
 
-		# Vertikale Linie
+		# Vertical line
 		var v_line = Line2D.new()
 		v_line.add_point(Vector2(start_x + i * tile_size, start_y))
 		v_line.add_point(Vector2(start_x + i * tile_size, start_y + grid_size * tile_size))

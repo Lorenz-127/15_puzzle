@@ -20,9 +20,10 @@ offset_bottom = -250.0
 grow_horizontal = 2
 grow_vertical = 2
 tab_alignment = 1
-current_tab = 0
+current_tab = 4
 
 [node name="Sound" type="TabBar" parent="TabContainer"]
+visible = false
 layout_mode = 2
 metadata/_tab_index = 0
 
@@ -205,4 +206,87 @@ text = "12345
 [node name="Label5" type="Label" parent="TabContainer/Profile/MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "12345
+"
+
+[node name="Puzzle Image" type="TabBar" parent="TabContainer"]
+layout_mode = 2
+metadata/_tab_index = 4
+
+[node name="MarginContainer" type="MarginContainer" parent="TabContainer/Puzzle Image"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 24
+
+[node name="GridContainer" type="GridContainer" parent="TabContainer/Puzzle Image/MarginContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/Puzzle Image/MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 75
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="TabContainer/Puzzle Image/MarginContainer/GridContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 64
+alignment = 1
+
+[node name="Image_1" type="Label" parent="TabContainer/Puzzle Image/MarginContainer/GridContainer/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+text = "Image_1"
+
+[node name="Image_2" type="Label" parent="TabContainer/Puzzle Image/MarginContainer/GridContainer/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+text = "Image_2
+"
+
+[node name="Image_3" type="Label" parent="TabContainer/Puzzle Image/MarginContainer/GridContainer/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+text = "Image_3
+"
+
+[node name="Image_4" type="Label" parent="TabContainer/Puzzle Image/MarginContainer/GridContainer/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+text = "Image_4
+"
+
+[node name="Image_5" type="Label" parent="TabContainer/Puzzle Image/MarginContainer/GridContainer/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+text = "Image_5
+"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Puzzle Image/MarginContainer/GridContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 64
+alignment = 1
+
+[node name="Image_1" type="Label" parent="TabContainer/Puzzle Image/MarginContainer/GridContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Image_1"
+
+[node name="Image_2" type="Label" parent="TabContainer/Puzzle Image/MarginContainer/GridContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Image_2
+"
+
+[node name="Image_3" type="Label" parent="TabContainer/Puzzle Image/MarginContainer/GridContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Image_3
+"
+
+[node name="Image_4" type="Label" parent="TabContainer/Puzzle Image/MarginContainer/GridContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Image_4
+"
+
+[node name="Image_5" type="Label" parent="TabContainer/Puzzle Image/MarginContainer/GridContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Image_5
 "
